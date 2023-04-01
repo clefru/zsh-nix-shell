@@ -59,6 +59,10 @@ function nix-shell() {
     # if you use --pure you get bash
     command nix-shell "$@"
   else
+    if [[ -z "$SHELL" ]]; then
+      echo 'Error: Please set your $SHELL variable, e.g. "zsh"'
+      return
+    fi
     NIX_SHELL_PACKAGES="$NIX_SHELL_PACKAGES" \
     NIX_BUILD_SHELL="$NIX_SHELL_PLUGIN_DIR/scripts/buildShellShim" \
     NIX_EXECUTING_SHELL="$SHELL" \
